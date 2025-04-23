@@ -1,40 +1,58 @@
-// Lấy các phần tử
-const popup = document.getElementById('popup');
-const status = document.getElementById('status');
-const countdown = document.getElementById('countdown');
+let countdown = 10;
+let timerEl = document.getElementById("timer");
+let timerLabel = document.getElementById("timerLabel");
+let middleText = document.getElementById("middleText");
 
-// Hàm thay đổi trạng thái và hiển thị popup
-function showPopup(message, className) {
-    status.textContent = message;
-    status.className = className; // Thêm lớp để thay đổi màu sắc
-    popup.style.display = 'block';
+function startCycle() {
+  countdown = 10;
+  middleText.textContent = "Đang phân tích";
+  timerLabel.textContent = "Thời gian phân tích:";
+  timerEl.textContent = countdown;
+
+  let interval = setInterval(() => {
+    countdown--;
+    timerEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(interval);
+      showResult();
+    }
+  }, 1000);
 }
 
-// Hàm ẩn popup
-function hidePopup() {
-    popup.style.display = 'none';
+function showResult() {
+  const isTai = Math.random() < 0.5;
+  const blinkTarget = isTai ? "Tài" : "Xỉu";
+  middleText.textContent = `Chọn ${blinkTarget}`;
+  timerLabel.textContent = "Thời gian :";
+  countdown = 5;
+  timerEl.textContent = countdown;
+
+  const textEl = document.getElementById("mainText");
+  const blinkClass = "blink";
+
+  // Thêm nháy vào chữ Tài hoặc Xỉu
+  textEl.innerHTML = isTai
+    ? `<span class="${blinkClass}">Tài</span> - <span id="middleText">Chọn Tài</span> - Xỉu`
+    : `Tài - <span id="middleText">Chọn Xỉu</span> - <span class="${blinkClass}">Xỉu</span>`;
+
+  const countdownInterval = setInterval(() => {
+    countdown--;
+    timerEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      resetDisplay();
+    }
+  }, 1000);
 }
 
-// Hàm thay đổi nội dung ngẫu nhiên giữa "Tài" và "Xỉu"
-function changeStatusRandomly() {
-    const randomStatus = Math.random() < 0.5 ? 'Tài' : 'Xỉu';
-    const className = randomStatus === 'Tài' ? 'tai' : 'xiu';
-    showPopup(randomStatus, className);
-    setTimeout(() => {
-        status.textContent = `Chọn ${randomStatus}`;
-    }, 5000); // Sau 5 giây hiển thị "Chọn Tài" hoặc "Chọn Xỉu"
+function resetDisplay() {
+  document.getElementById("mainText").innerHTML =
+    `Tài - <span id="middleText">Đang phân tích</span> - Xỉu`;
+  middleText = document.getElementById("middleText");
+  startCycle();
 }
 
-// Hàm đếm ngược
-function countdownTimer(seconds) {
-    let remainingTime = seconds;
-    countdown.textContent = `Thời gian còn lại: ${remainingTime} giây`;
-    const interval = setInterval(() => {
-        remainingTime--;
-        countdown.textContent = `Thời gian còn lại: ${remainingTime} giây`;
-        if (remainingTime <= 0) {
-            clearInterval(interval);
-            changeStatusRandomly(); // Sau khi hết thời gian, thay đổi ngẫu nhiên
+startCycle();            changeStatusRandomly(); // Sau khi hết thời gian, thay đổi ngẫu nhiên
         }
     }, 1000);
 }
