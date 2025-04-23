@@ -1,40 +1,30 @@
-let countdown = 10;
-let timerEl = document.getElementById("timer");
-let timerLabel = document.getElementById("timerLabel");
-let middleText = document.getElementById("middleText");
-
-function startCycle() {
-  countdown = 10;
-  middleText.textContent = "Đang phân tích";
-  timerLabel.textContent = "Thời gian phân tích:";
-  timerEl.textContent = countdown;
-
-  let interval = setInterval(() => {
-    countdown--;
-    timerEl.textContent = countdown;
-    if (countdown <= 0) {
-      clearInterval(interval);
-      showResult();
-    }
-  }, 1000);
-}
-
 function showResult() {
   const isTai = Math.random() < 0.5;
   const blinkTarget = isTai ? "Tài" : "Xỉu";
-  middleText.textContent = `Chọn ${blinkTarget}`;
-  timerLabel.textContent = "Thời gian :";
+  timerLabel.textContent = "Thời gian kết quả:";
   countdown = 5;
   timerEl.textContent = countdown;
 
   const textEl = document.getElementById("mainText");
-  const blinkClass = "blink";
 
-  // Thêm nháy vào chữ Tài hoặc Xỉu
-  textEl.innerHTML = isTai
-    ? `<span class="${blinkClass}">Tài</span> - <span id="middleText">Chọn Tài</span> - Xỉu`
-    : `Tài - <span id="middleText">Chọn Xỉu</span> - <span class="${blinkClass}">Xỉu</span>`;
+  // Gán nội dung với phần nháy
+  if (isTai) {
+    textEl.innerHTML = `<span class="blink">Tài</span> - <span id="middleText">Chọn Tài</span> - Xỉu`;
+  } else {
+    textEl.innerHTML = `Tài - <span id="middleText">Chọn Xỉu</span> - <span class="blink">Xỉu</span>`;
+  }
 
+  middleText = document.getElementById("middleText");
+
+  const resultInterval = setInterval(() => {
+    countdown--;
+    timerEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(resultInterval);
+      resetDisplay();
+    }
+  }, 1000);
+}
   const countdownInterval = setInterval(() => {
     countdown--;
     timerEl.textContent = countdown;
