@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #1c1c1c, #2c2c2c);
+  background: #111;
   color: white;
   display: flex;
   justify-content: center;
@@ -15,26 +15,25 @@ body {
 }
 
 #mainText {
-  font-size: 3em;
+  font-size: 1.5em;
   font-weight: bold;
   color: white;
 }
 
 .timer {
-  margin-top: 20px;
-  font-size: 1.5em;
+  margin-top: 15px;
+  font-size: 1em;
   color: #ccc;
 }
 
 .blink {
-  animation: blink 0.5s infinite alternate;
+  animation: blink 0.4s infinite alternate;
 }
 
 @keyframes blink {
-  0% { opacity: 1; color: #ff4444; }
-  100% { opacity: 0.2; color: #44ff44; }
-}        opacity: 1;
-    }
+  from { opacity: 1; color: #ff4444; }
+  to   { opacity: 0.3; color: #44ff44; }
+}    }
 }
 
 /* Màu sắc cho trạng thái "Tài" và "Xỉu" */
